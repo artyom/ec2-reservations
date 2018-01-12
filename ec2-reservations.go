@@ -45,6 +45,9 @@ func do(w io.Writer) error {
 	runningInstances := make(map[instanceInfo]int)
 	for _, r := range resp.Reservations {
 		for _, inst := range r.Instances {
+			if inst.InstanceLifecycle != nil {
+				continue // skip spot instances
+			}
 			ii := instanceInfo{Type: *inst.InstanceType, AZ: *inst.Placement.AvailabilityZone}
 			runningInstances[ii] += 1
 		}
