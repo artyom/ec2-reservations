@@ -159,9 +159,8 @@ func reconcile(runningInstances, azReservations, regionReservations map[instance
 				out[k] = v + v2
 				delete(regionReservations, k2)
 			default:
-				n := have - need
-				out[k] = v + n
-				regionReservations[k2] = v2 - n
+				out[k] += need
+				regionReservations[k2] -= need
 			}
 			// fmt.Printf("k=%v, v=%d, v2=%d\n", k, v, v2)
 		}
